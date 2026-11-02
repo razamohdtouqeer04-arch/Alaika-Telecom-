@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alaika Telecom | Premium Mobile & Accessories Store</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#141414',
+                            700: '#262626',
+                            600: '#404040',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar and sleek transition effects */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555555;
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-sans antialiased selection:bg-white selection:text-black min-h-screen flex flex-col justify-between">
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-40 bg-black/90 backdrop-blur-md border-b border-neutral-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-white text-black font-extrabold text-xl flex items-center justify-center rounded-lg tracking-tighter group-hover:scale-105 transition-transform">
+                    AT
+                </div>
+                <div>
+                    <span class="text-xl font-bold tracking-widest uppercase block">Alaika Telecom</span>
+                    <span class="text-xs text-neutral-400 tracking-wider">Mobiles & Accessories Hub</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8">
+                <button onclick="switchTab('store')" id="nav-store" class="text-sm font-medium transition-colors hover:text-white text-white border-b-2 border-white pb-1">
+                    Store View
+                </button>
+                <button onclick="switchTab('admin')" id="nav-admin" class="text-sm font-medium text-neutral-400 transition-colors hover:text-white pb-1">
+                    Admin Dashboard
+                </button>
+                <button onclick="switchTab('models')" id="nav-models" class="text-sm font-medium text-neutral-400 transition-colors hover:text-white pb-1">
+                    Mobile Models DB
+                </button>
+            </nav>
+
+            <!-- Actions (Cart & Mobile Menu Trigger) -->
+            <div class="flex items-center gap-4">
+                <button onclick="openCartModal()" class="relative p-2.5 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 rounded-full transition-all flex items-center justify-center text-white">
+                    <i class="fa-solid fa-cart-shopping text-sm"></i>
+                    <span id="cart-badge" class="absolute -top-1 -right-1 bg-white text-black text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
+                </button>
+                
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2.5 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 rounded-full text-white">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-neutral-900 border-b border-neutral-800 px-6 py-4 flex flex-col gap-3">
+            <button onclick="switchTab('store'); toggleMobileMenu();" class="text-left py-2 font-medium text-white border-b border-neutral-800">Store View</button>
+            <button onclick="switchTab('admin'); toggleMobileMenu();" class="text-left py-2 font-medium text-neutral-300 border-b border-neutral-800">Admin Dashboard</button>
+            <button onclick="switchTab('models'); toggleMobileMenu();" class="text-left py-2 font-medium text-neutral-300">Mobile Models DB</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ================= STORE VIEW TAB ================= -->
+        <section id="tab-store" class="space-y-8">
+            <!-- Hero Banner -->
+            <div class="relative bg-neutral-900 border border-neutral-800 rounded-3xl p-8 sm:p-12 overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-neutral-800/30 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="space-y-4 max-w-xl z-10">
+                    <span class="inline-block px-3 py-1 bg-white text-black text-xs font-bold rounded-full uppercase tracking-widest">New Collection 2026</span>
+                    <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                        Next-Gen Tech & Accessories at Alaika Telecom
+                    </h1>
+                    <p class="text-neutral-400 text-base">
+                        Explore high-performance smartphones, ultra-fast data cables, immersive headphones, and premium telecom accessories with customized adjustable pricing.
+                    </p>
+                    <div class="pt-2 flex items-center gap-4">
+                        <button onclick="filterCategory('All')" class="px-6 py-3 bg-white text-black font-semibold rounded-full hover:bg-neutral-200 transition-colors">
+                            Explore Catalog
+                        </button>
+                        <button onclick="switchTab('admin')" class="px-6 py-3 bg-neutral-800 hover:bg-neutral-700 text-white font-semibold rounded-full border border-neutral-700 transition-colors">
+                            Manage Store
+                        </button>
+                    </div>
+                </div>
+                <div class="z-10 w-full md:w-auto flex justify-center">
+                    <div class="w-72 h-72 sm:w-80 sm:h-80 bg-neutral-950 border border-neutral-800 rounded-2xl p-6 flex flex-col items-center justify-center relative shadow-2xl group">
+                        <div class="absolute top-4 right-4 bg-neutral-800 px-2.5 py-1 rounded text-xs text-neutral-300">Featured Item</div>
+                        <img id="hero-featured-img" src="https://placehold.co/300x300/141414/ffffff?text=Alaika+Telecom" alt="Featured Phone" class="w-48 h-48 object-cover rounded-xl mb-4 group-hover:scale-105 transition-transform">
+                        <h3 id="hero-featured-title" class="font-bold text-lg text-white">Alaika Flagship Pro</h3>
+                        <p id="hero-featured-price" class="text-neutral-400 text-sm">$999.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters & Search Bar -->
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 bg-neutral-900/50 p-4 rounded-2xl border border-neutral-800">
+                <!-- Category Tabs -->
+                <div id="category-filter-buttons" class="flex flex-wrap gap-2 w-full md:w-auto">
+                    <button onclick="filterCategory('All')" class="cat-btn px-4 py-2 bg-white text-black text-sm font-medium rounded-xl transition-all shadow-sm" data-cat="All">All Items</button>
+                    <button onclick="filterCategory('Mobile Phones')" class="cat-btn px-4 py-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-sm font-medium rounded-xl transition-all" data-cat="Mobile Phones">Mobiles</button>
+                    <button onclick="filterCategory('Data Cables')" class="cat-btn px-4 py-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-sm font-medium rounded-xl transition-all" data-cat="Data Cables">Cables</button>
+                    <button onclick="filterCategory('Headphones')" class="cat-btn px-4 py-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-sm font-medium rounded-xl transition-all" data-cat="Headphones">Headphones</button>
+                    <button onclick="filterCategory('Accessories')" class="cat-btn px-4 py-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-sm font-medium rounded-xl transition-all" data-cat="Accessories">Accessories</button>
+                </div>
+                <!-- Search Box -->
+                <div class="relative w-full md:w-72">
+                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-500">
+                        <i class="fa-solid fa-search"></i>
+                    </span>
+                    <input type="text" id="store-search" oninput="renderStoreProducts()" placeholder="Search products..." class="w-full bg-neutral-900 border border-neutral-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-white transition-colors">
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div>
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold tracking-tight text-white" id="store-heading">All Products</h2>
+                    <span id="product-count" class="text-sm text-neutral-400">Showing 0 items</span>
+                </div>
+                <div id="store-products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- Dynamic Product Cards injected here -->
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= ADMIN DASHBOARD TAB ================= -->
+        <section id="tab-admin" class="hidden space-y-8">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-neutral-900 border border-neutral-800 p-6 rounded-2xl">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">Admin Inventory Manager</h2>
+                    <p class="text-neutral-400 text-sm mt-1">Add new products, adjust rates, manage stock, and customize descriptions for Alaika Telecom.</p>
+                </div>
+                <button onclick="openProductModal('add')" class="px-5 py-3 bg-white text-black font-semibold rounded-xl hover:bg-neutral-200 transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i> Add New Product
+                </button>
+            </div>
+
+            <!-- Products Management Table / Cards -->
+            <div class="bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden shadow-xl">
+                <div class="p-4 border-b border-neutral-800 flex items-center justify-between">
+                    <h3 class="font-bold text-white">Product Inventory List</h3>
+                    <div class="w-64">
+                        <input type="text" id="admin-search" oninput="renderAdminTable()" placeholder="Search inventory..." class="w-full bg-black border border-neutral-800 rounded-lg px-3 py-1.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-white">
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-neutral-950 text-neutral-400 text-xs uppercase tracking-wider border-b border-neutral-800">
+                                <th class="p-4">Product</th>
+                                <th class="p-4">Category</th>
+                                <th class="p-4">Rate (Price)</th>
+                                <th class="p-4">Stock</th>
+                                <th class="p-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-table-body" class="divide-y divide-neutral-800 text-sm">
+                            <!-- Dynamic Admin rows injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= MOBILE MODELS DB TAB ================= -->
+        <section id="tab-models" class="hidden space-y-8">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-neutral-900 border border-neutral-800 p-6 rounded-2xl">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">Mobile Models Database</h2>
+                    <p class="text-neutral-400 text-sm mt-1">Add any mobile phone model with brand specs, images, and quick link to inventory.</p>
+                </div>
+                <button onclick="openMobileModelModal('add')" class="px-5 py-3 bg-white text-black font-semibold rounded-xl hover:bg-neutral-200 transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-mobile-screen"></i> Add Mobile Model
+                </button>
+            </div>
+
+            <!-- Mobile Models Catalog Grid -->
+            <div id="mobile-models-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Dynamic mobile models cards -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-20 bg-neutral-950 border-t border-neutral-800 py-12 text-neutral-400 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-white text-black font-bold flex items-center justify-center rounded-md">AT</div>
+                <span class="text-white font-bold text-lg tracking-wider">Alaika Telecom</span>
+            </div>
+            <p class="text-xs text-neutral-500">© 2026 Alaika Telecom. All rights reserved. Black & White Minimalist Edition.</p>
+            <div class="flex items-center gap-6">
+                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-instagram text-lg"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-facebook text-lg"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-whatsapp text-lg"></i></a>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ================= MODALS ================= -->
+
+    <!-- Product Modal (Add/Edit Product) -->
+    <div id="product-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-neutral-900 border border-neutral-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-neutral-800 pb-4">
+                <h3 id="product-modal-title" class="text-xl font-bold text-white">Add New Product</h3>
+                <button onclick="closeProductModal()" class="text-neutral-400 hover:text-white text-xl p-2"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="product-form" onsubmit="handleProductSubmit(event)" class="space-y-4">
+                <input type="hidden" id="product-id">
+                <div>
+                    <label class="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Product Name</label>
+                    <input type="text" id="p-name" required class="w-full bg-black border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-white">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Category</label>
+                        <select id="p-category" class="w-full bg-black border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-white">
+                            <option value="Mobile Phones">Mobile Phones</option>
+                            <option value="Data Cables">Data Cables</option>
+                            <option value="Headphones">Headphones</option>
+                            <option value="Accessories">Accessories</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Price / Rate ($)</label>
+                        <input type="number" step="0.01" id="p-price" required class="w-full bg-black border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-white">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Stock Quantity</label>
+                        <input type="number" id="p-stock" required value="10" class="w-full bg-black border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Image URL</label>
+                        <input type="url" id="p-image" required placeholder="https://..." class="w-full bg-black border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-white">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Description</label>
+                    <textarea id="p-desc" rows="3" class="w-full bg-black border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-white" placeholder="Product details..."></textarea>
+                </div>
+                <div class="pt-4 flex items-center justify-end gap-3 border-t border-neutral-800">
+                    <button type="button" onclick="closeProductModal()" class="px-5 py-2.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-300 font-medium rounded-xl text-sm transition-colors">Cancel</button>
+                    <button type="submit" class="px-6 py-2.5 bg-white text-black font-semibold rounded-xl text-sm hover:bg-neutral-200 transition-colors">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mobile Model Modal (Add/Edit Mobile Model) -->
+    <div id="mobile-model-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-neutral-900 border border-neutral-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-neutral-800 pb-4">
+                <h3 id="mobile-modal-title" class="text-xl font-bold text-white">Add Mobile Model</h3>
+                <button onclick="closeMobileModelModal()" class="text-neutral-400 hover:text-white text-xl p-2"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="mobile-model-form" onsubmit="handleMobileModelSubmit(event)" class="space-y-4">
+                <input type="hidden" id="m-id">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Brand Name</label>
+                        <input type="text" id="m-brand" required placeholder="e.g. Apple, Samsung" class="w-full bg-black border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Model Name</label>
+                        <input type="text" id="m-name" required placeholder="e.g. Galaxy S26 Ultra" class="w-full bg-black border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-white">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Estimated Rate / Price ($)</label>
+                        <input type="number" step="0.01" id="m-price" required class="w-full bg-black border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Image URL</label>
+                        <input type="url" id="m-image" required placeholder="https://..." class="w-full bg-black border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-white">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Specifications (RAM, Storage, Battery)</label>
+                    <input type="text" id="m-specs" required placeholder="12GB RAM, 256GB Storage, 5000mAh" class="w-full bg-black border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-white">
+                </div>
+                <div class="pt-4 flex items-center justify-end gap-3 border-t border-neutral-800">
+                    <button type="button" onclick="closeMobileModelModal()" class="px-5 py-2.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-300 font-medium rounded-xl text-sm transition-colors">Cancel</button>
+                    <button type="submit" class="px-6 py-2.5 bg-white text-black font-semibold rounded-xl text-sm hover:bg-neutral-200 transition-colors">Save Model</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="detail-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-neutral-900 border border-neutral-800 rounded-3xl max-w-xl w-full p-6 sm:p-8 space-y-6 relative">
+            <button onclick="closeDetailModal()" class="absolute top-6 right-6 text-neutral-400 hover:text-white text-xl p-2"><i class="fa-solid fa-xmark"></i></button>
+            <div id="detail-content" class="space-y-4">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal / Checkout Drawer -->
+    <div id="cart-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex justify-end">
+        <div class="bg-neutral-900 border-l border-neutral-800 w-full max-w-md h-full flex flex-col justify-between p-6 sm:p-8 shadow-2xl">
+            <div class="space-y-6 flex-grow overflow-y-auto">
+                <div class="flex items-center justify-between border-b border-neutral-800 pb-4">
+                    <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-bag-shopping"></i> Your Shopping Cart
+                    </h3>
+                    <button onclick="closeCartModal()" class="text-neutral-400 hover:text-white text-xl p-2"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div id="cart-items-container" class="space-y-4">
+                    <!-- Cart items -->
+                </div>
+            </div>
+            <div class="pt-6 border-t border-neutral-800 space-y-4">
+                <div class="flex items-center justify-between text-lg font-bold text-white">
+                    <span>Total Amount:</span>
+                    <span id="cart-total-price">$0.00</span>
+                </div>
+                <button onclick="checkoutCart()" class="w-full py-3.5 bg-white text-black font-bold rounded-xl hover:bg-neutral-200 transition-colors shadow-lg">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        // --- INITIAL DATA & LOCALSTORAGE ---
+        const DEFAULT_PRODUCTS = [
+            {
+                id: 'p1',
+                name: 'Alaika Flagship Pro 5G',
+                category: 'Mobile Phones',
+                price: 899.00,
+                stock: 15,
+                image: 'https://placehold.co/400x400/141414/ffffff?text=Flagship+Pro',
+                desc: 'Ultimate performance smartphone with stunning AMOLED display and advanced triple camera setup.'
+            },
+            {
+                id: 'p2',
+                name: 'Alaika Aero Ultra Phone',
+                category: 'Mobile Phones',
+                price: 649.00,
+                stock: 22,
+                image: 'https://placehold.co/400x400/141414/ffffff?text=Aero+Ultra',
+                desc: 'Sleek black & white edition crafted for speed, durability, and crystal-clear photography.'
+            },
+            {
+                id: 'p3',
+                name: 'Braided Type-C Fast Cable',
+                category: 'Data Cables',
+                price: 19.99,
+                stock: 100,
+                image: 'https://placehold.co/400x400/141414/ffffff?text=Type-C+Cable',
+                desc: '100W Power Delivery reinforced nylon braided fast charging and data transfer cable.'
+            },
+            {
+                id: 'p4',
+                name: 'Lightning Rapid Sync Cable',
+                category: 'Data Cables',
+                price: 24.50,
+                stock: 80,
+                image: 'https://placehold.co/400x400/141414/ffffff?text=Lightning+Cable',
+                desc: 'MFi certified rapid charging cable designed for supreme longevity.'
+            },
+            {
+                id: 'p5',
+                name: 'SonicWave ANC Headphones',
+                category: 'Headphones',
+                price: 149.99,
+                stock: 25,
+                image: 'https://placehold.co/400x400/141414/ffffff?text=SonicWave+ANC',
+                desc: 'Active Noise Cancelling wireless headphones with immersive studio-grade bass and 40h battery.'
+            },
+            {
+                id: 'p6',
+                name: 'PureSound Pods Pro',
+                category: 'Headphones',
+                price: 99.00,
+                stock: 40,
+                image: 'https://placehold.co/400x400/141414/ffffff?text=PureSound+Pods',
+                desc: 'Ergonomic wireless earbuds with spatial audio and sleek minimalist charging case.'
+            },
+            {
+                id: 'p7',
+                name: 'MagSafe Wireless Power Bank 10000mAh',
+                category: 'Accessories',
+                price: 59.99,
+                stock: 35,
+                image: 'https://placehold.co/400x400/141414/ffffff?text=Power+Bank',
+                desc: 'Magnetic wireless portable charger designed for seamless on-the-go power.'
+            },
+            {
+                id: 'p8',
+                name: 'Tempered Glass Screen Protector',
+                category: 'Accessories',
+                price: 12.99,
+                stock: 150,
+                image: 'https://placehold.co/400x400/141414/ffffff?text=Glass+Guard',
+                desc: '9H hardness ultra-clear scratch-resistant tempered glass screen protector.'
+            }
+        ];
+
+        const DEFAULT_MOBILE_MODELS = [
+            {
+                id: 'm1',
+                brand: 'Apple',
+                name: 'iPhone 17 Pro Max',
+                price: 1199.00,
+                specs: '8GB RAM, 512GB Storage, A19 Bionic',
+                image: 'https://placehold.co/400x400/141414/ffffff?text=iPhone+17+Pro'
+            },
+            {
+                id: 'm2',
+                brand: 'Samsung',
+                name: 'Galaxy S26 Ultra',
+                price: 1299.00,
+                specs: '12GB RAM, 1TB Storage, Snapdragon 8 Gen 5',
+                image: 'https://placehold.co/400x400/141414/ffffff?text=Galaxy+S26+Ultra'
+            },
+            {
+                id: 'm3',
+                brand: 'Google',
+                name: 'Pixel 11 Pro',
+                price: 999.00,
+                specs: '12GB RAM, 256GB Storage, Google Tensor G6',
+                image: 'https://placehold.co/400x400/141414/ffffff?text=Pixel+11+Pro'
+            },
+            {
+                id: 'm4',
+                brand: 'OnePlus',
+                name: 'OnePlus 14 Pro',
+                price: 899.00,
+                specs: '16GB RAM, 256GB Storage, 120Hz AMOLED',
+                image: 'https://placehold.co/400x400/141414/ffffff?text=OnePlus+14+Pro'
+            }
+        ];
+
+        let products = JSON.parse(localStorage.getItem('alaika_products')) || DEFAULT_PRODUCTS;
+        let mobileModels = JSON.parse(localStorage.getItem('alaika_mobile_models')) || DEFAULT_MOBILE_MODELS;
+        let cart = JSON.parse(localStorage.getItem('alaika_cart')) || [];
+        let currentCategoryFilter = 'All';
+
+        function saveData() {
+            localStorage.setItem('alaika_products', JSON.stringify(products));
+            localStorage.setItem('alaika_mobile_models', JSON.stringify(mobileModels));
+            localStorage.setItem('alaika_cart', JSON.stringify(cart));
+        }
+
+        // --- TOAST NOTIFICATION ---
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `px-4 py-3 rounded-xl text-sm font-medium shadow-2xl border transition-all transform translate-y-2 opacity-0 flex items-center gap-3 ${
+                type === 'success' ? 'bg-neutral-900 border-white text-white' : 'bg-neutral-900 border-red-500 text-red-400'
+            }`;
+            toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check text-white' : 'fa-circle-exclamation text-red-400'}"></i> ${message}`;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // --- TAB NAVIGATION ---
+        function switchTab(tabName) {
+            document.getElementById('tab-store').classList.add('hidden');
+            document.getElementById('tab-admin').classList.add('hidden');
+            document.getElementById('tab-models').classList.add('hidden');
+
+            document.getElementById('nav-store').className = "text-sm font-medium text-neutral-400 transition-colors hover:text-white pb-1";
+            document.getElementById('nav-admin').className = "text-sm font-medium text-neutral-400 transition-colors hover:text-white pb-1";
+            document.getElementById('nav-models').className = "text-sm font-medium text-neutral-400 transition-colors hover:text-white pb-1";
+
+            if (tabName === 'store') {
+                document.getElementById('tab-store').classList.remove('hidden');
+                document.getElementById('nav-store').className = "text-sm font-medium transition-colors hover:text-white text-white border-b-2 border-white pb-1";
+                renderStoreProducts();
+            } else if (tabName === 'admin') {
+                document.getElementById('tab-admin').classList.remove('hidden');
+                document.getElementById('nav-admin').className = "text-sm font-medium transition-colors hover:text-white text-white border-b-2 border-white pb-1";
+                renderAdminTable();
+            } else if (tabName === 'models') {
+                document.getElementById('tab-models').classList.remove('hidden');
+                document.getElementById('nav-models').className = "text-sm font-medium transition-colors hover:text-white text-white border-b-2 border-white pb-1";
+                renderMobileModelsGrid();
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- STORE VIEW RENDER ---
+        function filterCategory(category) {
+            currentCategoryFilter = category;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if (btn.getAttribute('data-cat') === category) {
+                    btn.className = "cat-btn px-4 py-2 bg-white text-black text-sm font-medium rounded-xl transition-all shadow-sm";
+                } else {
+                    btn.className = "cat-btn px-4 py-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-sm font-medium rounded-xl transition-all";
+                }
+            });
+            document.getElementById('store-heading').innerText = category === 'All' ? 'All Products' : category;
+            renderStoreProducts();
+        }
+
+        function renderStoreProducts() {
+            const grid = document.getElementById('store-products-grid');
+            const searchVal = document.getElementById('store-search').value.toLowerCase();
+            
+            let filtered = products.filter(p => {
+                const matchesCat = currentCategoryFilter === 'All' || p.category === currentCategoryFilter;
+                const matchesSearch = p.name.toLowerCase().includes(searchVal) || p.desc.toLowerCase().includes(searchVal);
+                return matchesCat && matchesSearch;
+            });
+
+            document.getElementById('product-count').innerText = `Showing ${filtered.length} items`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-16 text-center space-y-3 bg-neutral-900/40 border border-neutral-800 rounded-2xl">
+                        <i class="fa-solid fa-box-open text-4xl text-neutral-600"></i>
+                        <p class="text-neutral-400 font-medium">No products found matching your search.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(p => `
+                <div class="bg-neutral-900 border border-neutral-800 rounded-2xl p-4 flex flex-col justify-between hover:border-neutral-700 transition-all group">
+                    <div>
+                        <div class="relative w-full h-48 bg-neutral-950 rounded-xl overflow-hidden mb-4 cursor-pointer" onclick="openDetailModal('${p.id}')">
+                            <span class="absolute top-3 left-3 bg-black/70 backdrop-blur-md text-white text-[10px] font-semibold px-2.5 py-1 rounded-md uppercase tracking-wider">${p.category}</span>
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/400x400/141414/ffffff?text=Alaika+Telecom'">
+                        </div>
+                        <h3 onclick="openDetailModal('${p.id}')" class="font-bold text-white text-base truncate cursor-pointer hover:underline">${p.name}</h3>
+                        <p class="text-neutral-400 text-xs line-clamp-2 mt-1 mb-3">${p.desc}</p>
+                    </div>
+                    <div class="pt-3 border-t border-neutral-800 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-neutral-500 block">Rate</span>
+                            <span class="text-lg font-extrabold text-white">$${Number(p.price).toFixed(2)}</span>
+                        </div>
+                        <button onclick="addToCart('${p.id}')" class="px-3.5 py-2 bg-white text-black text-xs font-bold rounded-xl hover:bg-neutral-200 transition-colors flex items-center gap-1.5">
+                            <i class="fa-solid fa-cart-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- ADMIN DASHBOARD RENDER ---
+        function renderAdminTable() {
+            const tbody = document.getElementById('admin-table-body');
+            const searchVal = document.getElementById('admin-search').value.toLowerCase();
+
+            let filtered = products.filter(p => p.name.toLowerCase().includes(searchVal) || p.category.toLowerCase().includes(searchVal));
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="p-8 text-center text-neutral-500">No inventory items found.</td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(p => `
+                <tr class="hover:bg-neutral-800/50 transition-colors">
+                    <td class="p-4 flex items-center gap-3">
+                        <img src="${p.image}" class="w-10 h-10 rounded-lg object-cover bg-neutral-950 border border-neutral-800" onerror="this.src='https://placehold.co/100x100/141414/ffffff?text=Item'">
+                        <div>
+                            <span class="font-bold text-white block">${p.name}</span>
+                            <span class="text-xs text-neutral-500 line-clamp-1">${p.desc}</span>
+                        </div>
+                    </td>
+                    <td class="p-4 text-neutral-300">
+                        <span class="px-2.5 py-1 bg-neutral-800 rounded text-xs">${p.category}</span>
+                    </td>
+                    <td class="p-4 font-bold text-white">$${Number(p.price).toFixed(2)}</td>
+                    <td class="p-4 text-neutral-300">
+                        <span class="px-2 py-0.5 rounded text-xs ${p.stock > 5 ? 'bg-neutral-800 text-neutral-300' : 'bg-red-950 text-red-400 border border-red-800'}">${p.stock} units</span>
+                    </td>
+                    <td class="p-4 text-right space-x-2">
+                        <button onclick="openProductModal('edit', '${p.id}')" class="px-3 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-white rounded-lg text-xs font-medium transition-colors">
+                            <i class="fa-solid fa-pen-to-square"></i> Edit
+                        </button>
+                        <button onclick="deleteProduct('${p.id}')" class="px-3 py-1.5 bg-red-950 hover:bg-red-900 text-red-400 rounded-lg text-xs font-medium transition-colors border border-red-900">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // --- MOBILE MODELS DB RENDER ---
+        function renderMobileModelsGrid() {
+            const grid = document.getElementById('mobile-models-grid');
+
+            if (mobileModels.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-16 text-center space-y-3 bg-neutral-900/40 border border-neutral-800 rounded-2xl">
+                        <i class="fa-solid fa-mobile text-4xl text-neutral-600"></i>
+                        <p class="text-neutral-400 font-medium">No mobile models added yet. Click 'Add Mobile Model' above.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = mobileModels.map(m => `
+                <div class="bg-neutral-900 border border-neutral-800 rounded-2xl p-4 flex flex-col justify-between hover:border-neutral-700 transition-all group">
+                    <div>
+                        <div class="relative w-full h-48 bg-neutral-950 rounded-xl overflow-hidden mb-4">
+                            <span class="absolute top-3 left-3 bg-black/70 backdrop-blur-md text-white text-[10px] font-semibold px-2.5 py-1 rounded-md uppercase tracking-wider">${m.brand}</span>
+                            <img src="${m.image}" alt="${m.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/400x400/141414/ffffff?text=Mobile'">
+                        </div>
+                        <h3 class="font-bold text-white text-base">${m.name}</h3>
+                        <p class="text-neutral-400 text-xs mt-1 mb-3"><i class="fa-solid fa-microchip mr-1"></i> ${m.specs}</p>
+                    </div>
+                    <div class="pt-3 border-t border-neutral-800 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-neutral-500 block">Est. Rate</span>
+                            <span class="text-lg font-extrabold text-white">$${Number(m.price).toFixed(2)}</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="openMobileModelModal('edit', '${m.id}')" class="p-2 bg-neutral-800 hover:bg-neutral-700 text-white rounded-lg text-xs" title="Edit Model">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button onclick="promoteModelToStore('${m.id}')" class="px-3 py-2 bg-white text-black text-xs font-bold rounded-xl hover:bg-neutral-200 transition-colors" title="Add to Store Inventory">
+                                <i class="fa-solid fa-store"></i> List
+                            </button>
+                            <button onclick="deleteMobileModel('${m.id}')" class="p-2 bg-red-950 hover:bg-red-900 text-red-400 rounded-lg text-xs border border-red-900" title="Delete Model">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- PRODUCT MODAL ACTIONS ---
+        function openProductModal(mode, id = null) {
+            const modal = document.getElementById('product-modal');
+            const title = document.getElementById('product-modal-title');
+            document.getElementById('product-form').reset();
+            document.getElementById('product-id').value = '';
+
+            if (mode === 'edit' && id) {
+                title.innerText = 'Edit Product';
+                const p = products.find(item => item.id === id);
+                if (p) {
+                    document.getElementById('product-id').value = p.id;
+                    document.getElementById('p-name').value = p.name;
+                    document.getElementById('p-category').value = p.category;
+                    document.getElementById('p-price').value = p.price;
+                    document.getElementById('p-stock').value = p.stock;
+                    document.getElementById('p-image').value = p.image;
+                    document.getElementById('p-desc').value = p.desc;
+                }
+            } else {
+                title.innerText = 'Add New Product';
+                document.getElementById('p-image').value = 'https://placehold.co/400x400/141414/ffffff?text=Alaika+Telecom';
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeProductModal() {
+            document.getElementById('product-modal').classList.add('hidden');
+        }
+
+        function handleProductSubmit(e) {
+            e.preventDefault();
+            const id = document.getElementById('product-id').value;
+            const name = document.getElementById('p-name').value;
+            const category = document.getElementById('p-category').value;
+            const price = parseFloat(document.getElementById('p-price').value);
+            const stock = parseInt(document.getElementById('p-stock').value);
+            const image = document.getElementById('p-image').value;
+            const desc = document.getElementById('p-desc').value;
+
+            if (id) {
+                // Edit existing
+                const index = products.findIndex(p => p.id === id);
+                if (index !== -1) {
+                    products[index] = { id, name, category, price, stock, image, desc };
+                    showToast('Product successfully updated!');
+                }
+            } else {
+                // Add new
+                const newProduct = {
+                    id: 'p_' + Date.now(),
+                    name,
+                    category,
+                    price,
+                    stock,
+                    image,
+                    desc
+                };
+                products.unshift(newProduct);
+                showToast('New product added to inventory!');
+            }
+
+            saveData();
+            closeProductModal();
+            renderAdminTable();
+            renderStoreProducts();
+        }
+
+        function deleteProduct(id) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                products = products.filter(p => p.id !== id);
+                saveData();
+                renderAdminTable();
+                renderStoreProducts();
+                showToast('Product deleted successfully.', 'error');
+            }
+        }
+
+        // --- MOBILE MODEL MODAL ACTIONS ---
+        function openMobileModelModal(mode, id = null) {
+            const modal = document.getElementById('mobile-model-modal');
+            const title = document.getElementById('mobile-modal-title');
+            document.getElementById('mobile-model-form').reset();
+            document.getElementById('m-id').value = '';
+
+            if (mode === 'edit' && id) {
+                title.innerText = 'Edit Mobile Model';
+                const m = mobileModels.find(item => item.id === id);
+                if (m) {
+                    document.getElementById('m-id').value = m.id;
+                    document.getElementById('m-brand').value = m.brand;
+                    document.getElementById('m-name').value = m.name;
+                    document.getElementById('m-price').value = m.price;
+                    document.getElementById('m-specs').value = m.specs;
+                    document.getElementById('m-image').value = m.image;
+                }
+            } else {
+                title.innerText = 'Add Mobile Model';
+                document.getElementById('m-image').value = 'https://placehold.co/400x400/141414/ffffff?text=Mobile+Model';
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeMobileModelModal() {
+            document.getElementById('mobile-model-modal').classList.add('hidden');
+        }
+
+        function handleMobileModelSubmit(e) {
+            e.preventDefault();
+            const id = document.getElementById('m-id').value;
+            const brand = document.getElementById('m-brand').value;
+            const name = document.getElementById('m-name').value;
+            const price = parseFloat(document.getElementById('m-price').value);
+            const specs = document.getElementById('m-specs').value;
+            const image = document.getElementById('m-image').value;
+
+            if (id) {
+                const index = mobileModels.findIndex(m => m.id === id);
+                if (index !== -1) {
+                    mobileModels[index] = { id, brand, name, price, specs, image };
+                    showToast('Mobile model updated successfully!');
+                }
+            } else {
+                const newModel = {
+                    id: 'm_' + Date.now(),
+                    brand,
+                    name,
+                    price,
+                    specs,
+                    image
+                };
+                mobileModels.unshift(newModel);
+                showToast('Mobile model added to database!');
+            }
+
+            saveData();
+            closeMobileModelModal();
+            renderMobileModelsGrid();
+        }
+
+        function deleteMobileModel(id) {
+            if (confirm('Are you sure you want to delete this mobile model?')) {
+                mobileModels = mobileModels.filter(m => m.id !== id);
+                saveData();
+                renderMobileModelsGrid();
+                showToast('Mobile model removed.', 'error');
+            }
+        }
+
+        function promoteModelToStore(id) {
+            const m = mobileModels.find(item => item.id === id);
+            if (m) {
+                const newProduct = {
+                    id: 'p_' + Date.now(),
+                    name: `${m.brand} ${m.name}`,
+                    category: 'Mobile Phones',
+                    price: m.price,
+                    stock: 10,
+                    image: m.image,
+                    desc: `Brand: ${m.brand} | Specs: ${m.specs}`
+                };
+                products.unshift(newProduct);
+                saveData();
+                showToast(`"${newProduct.name}" added to Store Inventory!`);
+            }
+        }
+
+        // --- PRODUCT DETAIL MODAL ---
+        function openDetailModal(id) {
+            const p = products.find(item => item.id === id);
+            if (!p) return;
+
+            const content = document.getElementById('detail-content');
+            content.innerHTML = `
+                <div class="w-full h-64 bg-neutral-950 rounded-2xl overflow-hidden border border-neutral-800 mb-4">
+                    <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
+                </div>
+                <div class="space-y-2">
+                    <span class="px-2.5 py-1 bg-neutral-800 rounded text-xs uppercase tracking-wider text-neutral-300">${p.category}</span>
+                    <h2 class="text-2xl font-bold text-white">${p.name}</h2>
+                    <p class="text-neutral-400 text-sm leading-relaxed">${p.desc}</p>
+                </div>
+                <div class="flex items-center justify-between pt-4 border-t border-neutral-800">
+                    <div>
+                        <span class="text-xs text-neutral-500 block">Current Rate</span>
+                        <span class="text-2xl font-extrabold text-white">$${Number(p.price).toFixed(2)}</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-neutral-500 block">Stock Status</span>
+                        <span class="text-sm font-semibold text-neutral-300">${p.stock} units available</span>
+                    </div>
+                </div>
+                <button onclick="addToCart('${p.id}'); closeDetailModal();" class="w-full py-3.5 bg-white text-black font-bold rounded-xl hover:bg-neutral-200 transition-colors shadow-lg mt-2">
+                    Add to Cart
+                </button>
+            `;
+            document.getElementById('detail-modal').classList.remove('hidden');
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
+        }
+
+        // --- CART & CHECKOUT ---
+        function addToCart(id) {
+            const p = products.find(item => item.id === id);
+            if (!p) return;
+
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                if (existing.qty < p.stock) {
+                    existing.qty++;
+                } else {
+                    showToast('Cannot add more items than available stock!', 'error');
+                    return;
+                }
+            } else {
+                cart.push({ id: p.id, name: p.name, price: p.price, image: p.image, qty: 1 });
+            }
+
+            saveData();
+            updateCartBadge();
+            showToast(`Added ${p.name} to cart!`);
+        }
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cart-badge');
+            const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+            if (totalCount > 0) {
+                badge.innerText = totalCount;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function openCartModal() {
+            renderCartItems();
+            document.getElementById('cart-modal').classList.remove('hidden');
+        }
+
+        function closeCartModal() {
+            document.getElementById('cart-modal').classList.add('hidden');
+        }
+
+        function updateCartQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+                saveData();
+                updateCartBadge();
+                renderCartItems();
+            }
+        }
+
+        function renderCartItems() {
+            const container = document.getElementById('cart-items-container');
+            const totalPriceEl = document.getElementById('cart-total-price');
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="py-20 text-center space-y-3">
+                        <i class="fa-solid fa-cart-shopping text-4xl text-neutral-600"></i>
+                        <p class="text-neutral-400 font-medium">Your cart is empty.</p>
+                    </div>
+                `;
+                totalPriceEl.innerText = '$0.00';
+                return;
+            }
+
+            let total = 0;
+            container.innerHTML = cart.map(item => {
+                const subtotal = item.price * item.qty;
+                total += subtotal;
+                return `
+                    <div class="flex items-center justify-between gap-4 bg-neutral-950 p-3 rounded-xl border border-neutral-800">
+                        <img src="${item.image}" class="w-14 h-14 object-cover rounded-lg bg-neutral-900 border border-neutral-800" onerror="this.src='https://placehold.co/100x100/141414/ffffff?text=Item'">
+                        <div class="flex-grow">
+                            <h4 class="font-bold text-white text-sm line-clamp-1">${item.name}</h4>
+                            <span class="text-neutral-400 text-xs">$${Number(item.price).toFixed(2)} each</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-neutral-900 px-2.5 py-1 rounded-lg border border-neutral-800">
+                            <button onclick="updateCartQty('${item.id}', -1)" class="text-neutral-400 hover:text-white px-1"><i class="fa-solid fa-minus text-xs"></i></button>
+                            <span class="text-xs font-bold text-white w-4 text-center">${item.qty}</span>
+                            <button onclick="updateCartQty('${item.id}', 1)" class="text-neutral-400 hover:text-white px-1"><i class="fa-solid fa-plus text-xs"></i></button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            totalPriceEl.innerText = `$${total.toFixed(2)}`;
+        }
+
+        function checkoutCart() {
+            if (cart.length === 0) {
+                showToast('Your cart is empty!', 'error');
+                return;
+            }
+            showToast('Order successfully placed with Alaika Telecom!');
+            cart = [];
+            saveData();
+            updateCartBadge();
+            closeCartModal();
+        }
+
+        // --- INITIALIZATION ON LOAD ---
+        window.onload = function() {
+            // Set featured hero product
+            if (products.length > 0) {
+                document.getElementById('hero-featured-img').src = products[0].image;
+                document.getElementById('hero-featured-title').innerText = products[0].name;
+                document.getElementById('hero-featured-price').innerText = `$${Number(products[0].price).toFixed(2)}`;
+            }
+            renderStoreProducts();
+            updateCartBadge();
+        };
+    </script>
+</body>
+</html>
